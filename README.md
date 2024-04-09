@@ -10,7 +10,7 @@
 </br>
 
 ## 배포주소
-> 주소 : https://www.dagong.site
+> 주소 : https://dagong.site
 
 </br>
 
