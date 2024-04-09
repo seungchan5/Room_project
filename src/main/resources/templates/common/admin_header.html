@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <header th:fragment="header">
+        <div class="l-header">
+            <img src="/images/DAGONG.png" alt="">
+        </div>
+        <div class="menu-header"></div>
+        <div class="r-header">
+            <button type="button" id="btn-login" th:unless="${session.adminId}">로그인</button>
+            <button type="button" id="btn-logout" th:if="${session.adminId}">로그아웃</button>
+        </div>
+    </header>
+</body>
+</html>

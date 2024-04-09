@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="project.study.repository.AdminMapper">
+
+    <select id="searchMemberList" resultType="project.study.authority.admin.dto.SearchMemberDto">
+        select
+        COALESCE(b.account, s.social_email) AS memberAccount,
+        m.member_name AS memberName,
+        m.member_nickname AS memberNickname,
+        replace(m.phone, substr(m.phone, 5, 11), '*******') as phone,
+        date_format(m.member_create_date, '%Y-%m-%d') AS memberCreateDate,
+        m.member_notify_count AS memberNotifyCount,
+        s.social_type AS socialType,
+        m.member_status AS memberStatusEnum
+        from member m
+        left join basic b ON m.member_id = b.member_id
+        left join social s ON m.member_id = s.member_id
+        where 1=1
+        <include refid="searchMemberWord"></include>
+        <include refid="searchMemberStatus"></include>
+        order by m.member_create_date desc
+        limit #{startNum}, #{endNum}
+
+    </select>
+
+    <select id="getTotalMemberCnt" resultType="int">
+        select count(*) from member m
+        left join basic b ON m.member_id = b.member_id
+        left join social s ON m.member_id = s.member_id
+        where 1=1
+        <include refid="searchMemberWord"></include>
+        <include refid="searchMemberStatus"></include>
+    </select>
+
+    <sql id ="searchMemberStatus">
+        <if test=" freezeOnly == 'false' or freezeOnly == null">
+            and (m.member_status = '정상' or m.member_status = '이용정지')
+        </if>
+        <if test=" freezeOnly == 'true'">
+            and m.member_status = '이용정지'
+        </if>
+    </sql>
+
+    <sql id="searchMemberWord">
+        <if test=" word != null and word != ''">
+            and (lower(COALESCE(b.account, s.social_email)) like concat ('%', lower(#{word}), '%')
+            or lower(m.member_name)like concat ('%', lower(#{word}), '%')
+            or lower(m.member_nickname) like concat ('%', lower(#{word}), '%'))
+        </if>
+    </sql>
+
+    <select id="searchExpireMemberList" resultType="project.study.authority.admin.dto.SearchExpireMemberDto">
+        select
+        COALESCE(b.account, s.social_email) AS memberAccount,
+        m.member_name as memberName,
+        m.member_nickname as memberNickname,
+        replace(m.phone, substr(m.phone, 5, 11), '*******') as memberPhone,
+        date_format(m.member_create_date, '%Y-%m-%d') as memberCreateDate,
+        date_format(m.member_expire_date, '%Y-%m-%d') as memberExpireDate,
+        s.social_type as socialType,
+        m.member_status as memberStatusEnum
+        from member m
+        left join basic b on m.member_id = b.member_id
+        left join social s on m.member_id = s.member_id
+        where m.member_status = '탈퇴'
+        <include refid="searchMemberWord"></include>
+        order by m.member_expire_date desc
+        limit #{startNum}, #{endNum}
+    </select>
+
+    <select id="getTotalExpireMemberCnt" resultType="int">
+        select count(*) from member m
+        left join basic b ON m.member_id = b.member_id
+        left join social s ON m.member_id = s.member_id
+        where m.member_status = '탈퇴'
+        <include refid="searchMemberWord"></include>
+    </select>
+
+    <select id="searchRoomList" resultType="project.study.authority.admin.dto.SearchRoomDto">
+        select
+        j.room_id as roomId,
+        r.room_title as roomTitle,
+        concat(cast((select count(j.room_id) from join_room j where r.room_id = j.room_id) as char),
+        '/',
+        cast(r.room_limit as char)) as roomMemberCount,
+        m.member_name as managerName,
+        date_format(r.room_create_date, '%Y-%m-%d') as roomCreateDate,
+        r.room_public as publicEnum
+        from join_room j
+        left join room r on r.room_id = j.room_id
+        left join member m on m.member_id = j.member_id
+        where j.authority_enum = '방장'
+        <include refid="searchRoomWord"></include>
+        order by r.room_create_date desc
+        limit #{startNum}, #{endNum}
+    </select>
+
+    <select id="getTotalRoomCnt" resultType="int">
+        select count(distinct(j.room_id))
+        from join_room j
+        left join room r on r.room_id = j.room_id
+        left join member m on m.member_id = j.member_id
+        where j.authority_enum = '방장'
+        <include refid="searchRoomWord"></include>
+    </select>
+
+    <sql id="searchRoomWord">
+        <if test=" word != null and word != ''">
+            and (lower(j.room_id) like concat ('%', lower(#{word}), '%')
+            or lower(r.room_title) like concat ('%', lower(#{word}), '%')
+            or lower(m.member_name) like concat ('%', lower(#{word}), '%'))
+        </if>
+    </sql>
+
+    <delete id="joinRoomDelete">
+        delete from join_room j
+        where j.room_id = #{roomId}
+    </delete>
+
+    <insert id="insertRoomDelete">
+        insert into room_delete (room_delete_date, room_id) values (date_add(now(), interval 1 month), #{roomId})
+    </insert>
+
+    <select id="searchNotifyList" resultType="project.study.authority.admin.dto.SearchNotifyDto">
+        select
+        COALESCE(b.account, s.social_email) AS reporterMemberAccount,
+        COALESCE(b2.account, s2.social_email) AS criminalMemberAccount,
+        r.room_id as roomId,
+        date_format(n.notify_date, '%Y-%m-%d') as notifyDate,
+        n.notify_reason as notifyReason,
+        n.notify_id as notifyId,
+        n.notify_status as notifyStatus
+        from notify n
+        left join room r on n.room_id = r.room_id
+        left join member m on m.member_id = n.reporter_member_id
+        left join basic b on m.member_id = b.member_id
+        left join social s on m.member_id = s.member_id
+        left join member m2 on m2.member_id = n.criminal_member_id
+        left join basic b2 on m2.member_id = b2.member_id
+        left join social s2 on m2.member_id = s2.member_id
+        where 1=1
+        <include refid="searchNotifyWord"></include>
+        <include refid="searchNotifyStatus"></include>
+        order by n.notify_date desc
+        limit #{startNum}, #{endNum}
+    </select>
+
+    <select id="getTotalNotifyCnt" resultType="int">
+        select count(n.notify_id)
+        from notify n
+        left join room r on n.room_id = r.room_id
+        left join member m on m.member_id = n.reporter_member_id
+        left join basic b on m.member_id = b.member_id
+        left join social s on m.member_id = s.member_id
+        left join member m2 on m2.member_id = n.criminal_member_id
+        left join basic b2 on m2.member_id = b2.member_id
+        left join social s2 on m2.member_id = s2.member_id
+        where 1=1
+        <include refid="searchNotifyWord"></include>
+        <include refid="searchNotifyStatus"></include>
+    </select>
+
+    <sql id="searchNotifyWord">
+        <if test=" word != null and word != ''">
+            and (lower(COALESCE(b.account, s.social_email)) like concat ('%', lower(#{word}), '%')
+            or lower(COALESCE(b2.account, s2.social_email)) like concat ('%', lower(#{word}), '%')
+            or lower(r.room_id) like concat ('%', lower(#{word}), '%'))
+        </if>
+    </sql>
+
+    <sql id ="searchNotifyStatus">
+        <if test=" containComplete == 'false' or containComplete == null">
+            and n.notify_status='처리중'
+        </if>
+        <if test=" containComplete == 'true'">
+            and (n.notify_status='처리중' or n.notify_status='처리완료')
+        </if>
+    </sql>
+
+    <select id="notifyReedMore" resultType="project.study.authority.admin.dto.SearchNotifyReadMoreDtoBatis">
+        select
+        COALESCE(b.account, s.social_email) AS reporterMemberAccount,
+        COALESCE(b2.account, s2.social_email) AS criminalMemberAccount,
+        r.room_id as roomId,
+        date_format(n.notify_date, '%Y-%m-%d') as notifyDate,
+        n.notify_reason as notifyReason,
+        n.notify_content as notifyContent,
+        n.notify_id as notifyId,
+        n.notify_status as notifyStatus
+        from notify n
+        left join room r on n.room_id = r.room_id
+        left join member m on m.member_id = n.reporter_member_id
+        left join basic b on m.member_id = b.member_id
+        left join social s on m.member_id = s.member_id
+        left join member m2 on m2.member_id = n.criminal_member_id
+        left join basic b2 on m2.member_id = b2.member_id
+        left join social s2 on m2.member_id = s2.member_id
+        where n.notify_id=#{notifyId}
+    </select>
+
+    <select id="notifyImage" resultType="project.study.authority.admin.dto.SearchNotifyImageDtoBatis">
+        select
+        store_name as notifyImageStoreName,
+        original_name as notifyImageOriginalName
+        from notify_image ni
+        join notify n on ni.notify_id = n.notify_id
+        where n.notify_id=#{notifyId}
+    </select>
+
+    <update id="notifyStatusChange">
+        update notify n set n.notify_status='처리완료' where n.notify_id=#{notifyId}
+    </update>
+
+    <select id="notifyMemberInfo" resultType="project.study.authority.admin.dto.SearchNotifyMemberInfoDto">
+        select
+        m.member_id as memberId,
+        COALESCE(b.account, s.social_email) as memberAccount,
+        m.member_name as memberName,
+        m.member_nickname as memberNickname,
+        replace(m.phone, substr(m.phone, 5, 11), '*******') as memberPhone,
+        date_format(m.member_create_date, '%Y-%m-%d') as memberCreateDate,
+        m.member_notify_count as memberNotifyCount,
+        s.social_type as socialType,
+        m.member_status as memberStatusEnum,
+        n.notify_reason as notifyReason
+        from notify n
+        left join member m on n.criminal_member_id = m.member_id
+        left join basic b on m.member_id = b.member_id
+        left join social s on m.member_id = s.member_id
+        where n.notify_id = #{notifyId}
+    </select>
+
+    <select id="notifyMemberProfile" resultType="String">
+        select
+        p.store_name as memberProfile
+        from profile p
+        left join member m on p.member_id = m.member_id
+        left join basic b on m.member_id = b.member_id
+        left join social s on m.member_id = s.member_id
+        where COALESCE(b.account, s.social_email) = #{account}
+    </select>
+
+    <update id="notifyMemberFreeze">
+        update member m
+        set m.member_notify_count = m.member_notify_count+1, m.member_status = '이용정지'
+        where m.member_id = #{memberId}
+    </update>
+
+    <update id="notifyMemberBan">
+        update member m
+        set m.member_notify_count = m.member_notify_count+1, m.member_status = '영구정지'
+        where m.member_id = #{memberId}
+    </update>
+
+
+    <select id="freezeSelect" resultType="String">
+        select freeze_end_date
+        from freeze
+        where member_id = #{memberId}
+        order by freeze_end_date desc
+        limit 1
+    </select>
+
+    <insert id="banFreeze">
+        insert into freeze (freeze_end_date, member_id, freeze_reason) values(date_format('9999-01-01', '%Y-%m-%d %H:%i:%s'), #{memberId}, #{freezeReason})
+    </insert>
+
+    <insert id="newFreeze">
+        insert into freeze (freeze_end_date, member_id, freeze_reason) values(date_add(current_timestamp, interval #{freezePeriod} day), #{memberId}, #{freezeReason})
+    </insert>
+
+    <insert id="plusFreeze">
+        insert into freeze (freeze_end_date, member_id, freeze_reason) values(str_to_date(#{newFreezePeriod}, '%Y-%m-%d %H:%i:%s'), #{memberId}, #{freezeReason})
+    </insert>
+
+    <select id="searchBanList" resultType="project.study.authority.admin.dto.SearchBanDto">
+        select
+        b.ban_id as banId,
+        b.ban_account AS memberAccount,
+        b.ban_name as memberName,
+        b.ban_nickname as memberNickname,
+        replace(b.ban_phone, substr(b.ban_phone, 5, 11), '*******') as phone,
+        date_format(b.suspended_date, '%Y-%m-%d') as suspendedDate,
+        b.member_id as memberId
+        from ban b
+        where 1=1
+        <include refid="searchBanWord"></include>
+        order by b.ban_id desc
+        limit #{startNum}, #{endNum}
+    </select>
+
+    <select id="getTotalBanCnt" resultType="int">
+        select count(*) from ban b
+        where 1=1
+        <include refid="searchBanWord"></include>
+    </select>
+
+    <sql id="searchBanWord">
+        <if test=" word != null and word != ''">
+            and (lower(b.ban_Id) like concat('%', lower(#{word}), '%')
+            or lower(b.ban_account) like concat('%', lower(#{word}), '%')
+            or lower(b.ban_name) like concat('%', lower(#{word}), '%')
+            or lower(b.ban_nickname) like concat('%', lower(#{word}), '%'))
+        </if>
+    </sql>
+
+    <select id="searchBanOne" resultType="Long">
+        select b.member_id
+        from ban b
+        where b.member_id = #{memberId}
+    </select>
+
+    <insert id="banInsert">
+        insert into ban (member_id, suspended_date, ban_account, ban_name, ban_nickname, ban_phone) values (#{memberId}, current_timestamp, #{memberAccount}, #{memberName}, #{memberNickname}, #{phone})
+    </insert>
+
+    <delete id="deleteBan">
+        delete from ban b where b.member_id=#{memberId}
+    </delete>
+
+    <select id="searchFreezeId" resultType="Long">
+        select freeze_id
+        from freeze
+        where member_id = #{memberId}
+        order by freeze_end_date DESC
+        limit 1
+    </select>
+
+    <delete id="deleteFreeze">
+        delete from freeze f where f.freeze_id=#{freezeId}
+    </delete>
+
+    <update id="banMemberStatusChangeNormal">
+        update member m
+        set m.member_notify_count = m.member_notify_count-1, m.member_status = '정상'
+        where m.member_id = #{memberId}
+    </update>
+
+    <update id="banMemberStatusChangeFreeze">
+        update member m
+        set m.member_notify_count = m.member_notify_count-1, m.member_status = '이용정지'
+        where m.member_id = #{memberId}
+    </update>
+
+</mapper>

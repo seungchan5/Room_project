@@ -1,0 +1,466 @@
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.mypageMain {
+    width: 50%;
+    margin-top: 2rem;
+    margin-bottom: 6rem;
+}
+.mypageMain input {
+    background-color: rgb(55, 62, 76);
+}
+.mypageMain span {
+    color: var(--light-gray);
+}
+
+.buttons {
+    margin-top: 2rem;
+}
+.box {
+    border-radius: 0.5rem;
+    border: 0.14rem solid rgb(45, 45, 45);
+    padding: 1rem;
+    background: rgb(23 29 39);
+}
+
+.content h3 {
+    margin: 2rem 0 1rem 0.5rem;
+}
+.profile {
+    padding: 3rem 1.5rem 1rem 1.5rem;
+}
+.profile > * {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+
+
+.nameBox {
+    margin-top: 2rem;
+}
+.myName {
+    font-size: 1.3rem;
+    margin: 0.3rem;
+    font-weight: bold;
+}
+
+.emailBox, .phoneBox {
+    color: rgb(124, 124, 124);
+}
+
+.editBtn {
+    width: 6rem;
+    height: 3rem;
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    background-color: var(--mypage-save-btn-color);
+    font-size: 1.05rem;
+}
+.editBtn:hover {
+    background-color: var(--mypage-save-btn-hover-color);
+}
+.profilebox {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+button#img {
+    padding: 0;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    position: relative;
+}
+
+.checkLabel {
+    height: 1rem;
+    right: 1rem;
+    bottom: 0rem;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+input[type="radio"]#defaultImage {
+    cursor: pointer;
+    width: initial;
+    height: initial;
+    visibility: visible;
+}
+button#img img {
+    border-radius: 50%;
+}
+#editProfile {
+    display: none;
+}
+
+button#img svg {
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    bottom: 0;
+    right: 0%;
+}
+
+/* editBox */
+.inputBox {
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+.inputBox span {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+.inputBox span .required {
+    color: red;
+    margin-left: 0.2rem;
+}
+
+.inputBox input {
+    width: 100%;
+    height: 3rem;
+    border: #e6eef5 solid 2px;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+.phoneBox {
+    display: flex;
+    gap: 1rem;
+}
+.phoneBox input[name="phone"] {
+    cursor: not-allowed;
+    color: var(--gray);
+}
+
+.phoneBox .formEditBtn {
+    width: 10rem;
+    border: none;
+    border-radius: var(--border-radius);
+    color: white;
+    background-color: var(--mypage-btn-color);
+    font-size: 1.05rem;
+}
+
+.formEditBtn:hover {
+    background-color: var(--mypage-btn-hover-color);
+}
+
+
+
+/* password */
+.password {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.password > * {
+    margin: 0;
+}
+.pwdSpan div {
+    color: var(--gray);
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+.pwdSpan span {
+    font-size: 1.1rem;
+}
+.password #pwdBtn {
+    width: 8rem;
+    height: 3rem;
+    border: none;
+    color: white;
+    background-color: var(--mypage-btn-color);
+    border-radius: var(--border-radius);
+    font-size: 1.05rem;
+    cursor: pointer;
+}
+.password #pwdBtn:hover {
+    background-color: var(--mypage-btn-hover-color);
+}
+
+.delete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.delete > * {
+    margin: 0;
+}
+
+
+
+#deleteBtn {
+    width: 6rem;
+    height: 3rem;
+    border: none;
+    color: white;
+    border-radius: var(--border-radius);
+    font-size: 1.05rem;
+    background-color: rgb(255, 87, 87);
+}
+#deleteBtn:hover {
+    background-color: rgb(226, 75, 75);
+}
+
+body {
+    position: relative;
+}
+
+.pop {
+    position: fixed;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.353);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.pop.disabled {
+    display: none;
+}
+.passwordPop, .deletePop, .phonePop {
+    width: 30rem;
+    border: 0.1rem solid var(--border-color);
+    background-color: var(--modal-wrap-color);
+    border-radius: 1rem;
+    padding: 1.5rem;
+}
+
+
+/* 팝업 */
+.popTop {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+.popTop > * {
+    margin: 0;
+}
+.title {
+    font-size: 1.1rem;
+}
+
+button.popCancel {
+    border: none;
+    cursor: pointer;
+}
+button.popCancel * {
+    pointer-events: none;
+}
+
+.inputDetail {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+
+}
+
+.inputDetail span {
+    display: initial;
+    color: rgb(164, 164, 164);
+    font-size: 0.8rem;
+    margin-right: 0.2rem;
+}
+.inputDetail .findPassword {
+    color: white
+}
+#findPassword {
+    cursor: pointer;
+}
+
+.popMain .inputBox {
+    margin-bottom: 3rem;
+}
+
+.phonePop .popMain .inputBox {
+    margin-bottom: 1.5rem;
+}
+
+.popBottom {
+    margin-top: 4rem;
+    text-align: right;
+}
+.popBottom > * {
+    width: 6rem;
+    height: 3rem;
+    border: none;
+    font-size: 1.1rem;
+    padding: 0;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+}
+button.popCancel {
+    background-color: rgb(30, 30, 37);
+    font-size: 1rem;
+    margin-right: 1rem;
+}
+button.popCancel:hover {
+    background-color: rgb(17, 17, 20);
+}
+.saveBtn {
+    background-color: rgb(20, 20, 29);
+    font-size: 1rem;
+}
+.saveBtn:hover {
+    background-color: rgb(9, 9, 12);
+}
+
+.popTop .popCancel {
+    background-color: rgba(255, 255, 255, 0);
+}
+.popTop .popCancel:hover {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.confirmMsg.disabled {
+    display: none;
+}
+
+/* 계정 삭제 */
+#deleteconfirm {
+    border: 1px solid #f90;
+    border-radius: 0.3125rem;
+    background-color: rgba(255,153,0,.2);
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 1rem;
+}
+#deleteconfirm > * {
+    margin: 0;
+}
+
+/* 약관 체크박스 */
+.policy {
+    padding: 0 1rem;
+    margin-top: 2rem;
+}
+.checkbox {
+    display: flex;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.checkbox > * {
+    margin: 0;
+}
+
+.checkbox input {
+    opacity: 0;
+    width: initial;
+    position: absolute;
+    top: -1rem;
+}
+
+.check {
+    width: 22px;
+    height: 22px;
+    background: #E6ECF1;
+    border-radius: 6px;
+    border: 1px solid #D9E0E6;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.check.confirm {
+    background-color: var(--confirm-color);
+}
+.check svg {
+    fill: #E6ECF1;
+    pointer-events: none;
+}
+.checkbox label span {
+    pointer-events: none;
+    color: var(--light-gray)
+}
+.checkbox label {
+    display: flex;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+
+#deletePopDeleteBtn[data-is-allowed="false"] {
+    pointer-events: none;
+    color: white;
+}
+#deletePopDeleteBtn[data-is-allowed="true"] {
+    background-color: #f90;
+    color: white;
+}
+#deletePopDeleteBtn[data-is-allowed="true"]:hover {
+    background-color: rgb(236, 142, 2);
+}
+
+
+/* 휴대폰 변경 */
+.phoneBox {
+    display: flex;
+    gap: 1rem;
+}
+.phoneBox > * {
+    margin: 0;
+}
+input[name="phones"] {
+    width: 75%;
+}
+input[name="phoneCheck"] {
+    width: 100%;
+}
+.inputBox input {
+    border: 0.1rem solid var(--border-color);
+    outline: none;
+    border-radius: var(--border-radius);
+    padding: 0 1rem;
+    height: 2.5rem;
+
+}
+.inputBox button {
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--mypage-btn-color);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+.inputBox button:hover {
+    background-color: var(--mypage-btn-hover-color);
+
+}
+#phoneBtn {
+    width: 25%;
+}
+.btn {
+    display: flex;
+    align-items: center;
+    height: 2.5rem;
+    gap: 0.5rem
+}
+.btn > * {
+    margin: 0;
+}
+
+.confirmMsg {
+    color: var(--confirm-color);
+    margin-top: 0.5rem;
+}
+
+.confirmMsg.error {
+    color: var(--error-color);
+}
+.limitTime {
+    margin: 0 !important;
+}

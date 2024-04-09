@@ -1,0 +1,54 @@
+aside {
+    background-color: rgb(69, 69, 69);
+    padding: 0 1rem;
+}
+
+.admin-name-wrap {
+    height: 6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;   
+}
+
+.menu-list-wrap {
+    margin-top: 1rem;
+}
+
+.admin-name {
+    color: var(--important-color);
+    font-size: 1.5rem;
+}
+
+.admin-enum {
+    font-size: 1rem;
+    margin-left: 0.5rem;
+    margin-top: 0.3rem;
+}
+
+.category {
+    margin-bottom: 2.5rem;
+}
+
+.category h4 {
+    margin-bottom: 0.5rem;
+}
+
+.menu-list a {
+    display: block;
+    margin-left: 0.2rem;
+    padding : 0.3rem 0.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    margin-bottom: 0.3rem;
+    transition: background-color 0.1s ease-in-out;
+}
+
+.menu-list a:hover {
+    background-color: rgb(213, 199, 181);
+    transition: background-color 0.1s ease-in-out;
+}
+
+.menu-list a[aria-selected="true"] {
+    background-color: antiquewhite;
+    color: black;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/notify_read_more.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/admin_read_more.js"></script>
+    <script src="/js/admin_notify.js"></script>
+    <title>신고 자세히 보기</title>
+</head>
+<body>
+    <div class="container">
+        <div class="notify-info">
+            <div class="notify-box">
+                    <div class="title-notify-number">신고번호</div>
+                    <input type="text" name="notify-number" id="notify-number" class="notify-number" th:value="${notifyInfo.notifyId}" readonly>
+            </div>
+            <div class="notify-box">
+                <div class="title-notify-date">신고일시</div>
+                <input type="text" name="notify-date" id="notify-date" class="notify-dater" th:value="${notifyInfo.notifyDate}" readonly>
+            </div>
+            <div class="notify-box">
+                <div class="title-donotify-member">신고한 회원</div>
+                <input type="text" name="donotify-member" id="donotify-member" class="donotify-member" th:value="${notifyInfo.reporterMemberAccount}" readonly>
+            </div>
+            <div class="notify-box">
+                <div class="title-benotified-member">신고된 회원</div>
+                <input type="text" name="benotified-member" id="benotified-member" class="benotified-member" th:value="${notifyInfo.criminalMemberAccount}" readonly>
+            </div>
+            <div class="notify-box">
+                <div class="title-notify-reason">신고 사유</div>
+                <input type="text" name="notify-reason" id="notify-reason" class="notify-reason" th:value="${notifyInfo.notifyReason.getNotifyType()}" readonly>
+            </div>
+            <div class="notify-box">
+                <div class="title-notify-content">신고 내용</div>
+                <textarea class="notify-content" name="notify-content" id="notify-content" cols="30" rows="10" th:text="${notifyInfo.notifyContent}" readonly></textarea>
+            </div>
+            <div class="notify-box">
+                <div class="title-notify-image">첨부파일</div>
+                    <div class="notify-image-box" th:if="${!notifyInfo.notifyImages.isEmpty()}">
+                        <div class="notify-image" th:each="notifyImage, notifyIndex : ${notifyInfo.notifyImages}">
+                            <div class="notify-image-name" th:text="${notifyImage.notifyImageOriginalName}"></div>
+                            <a class="imagePop" th:href="'/images/notify_image/'+ ${notifyImage.notifyImageStoreName}" target="_blank">
+                                <img th:src="'/images/notify_image/' +${notifyImage.notifyImageStoreName}" alt="" width="100" height="100">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="notify-image-box" th:if="${notifyInfo.notifyImages.isEmpty()}">
+                        <div class="notify-image">
+                            <div class="notify-image-name">이미지 없음</div>
+                        </div>
+                    </div>
+            </div>
+        <hr>
+            <div class="process-box" th:if="${#strings.equals(notifyInfo.notifyStatus, '처리완료')}">
+                <div class="title-process-status">처리 상태</div>
+                <input type="text" name="process-status" id="process-status" class="process-status" th:value="${notifyInfo.notifyStatus}">
+            </div>
+            <div class="process-box" th:if="${!#strings.equals(notifyInfo.notifyStatus, '처리완료')}">
+                <div class="title-process-status">처리 상태</div>
+                <input type="text" name="process-status" id="process-status" class="process-status" placeholder="완료버튼을 누르면 처리완료로 변경됩니다" readonly>
+            </div>
+        </div>
+        <div class="button-box">
+            <div class="button">
+                <button class="completeBtn">완료</button>
+            </div>
+            <div class="button">
+                <button class="cancelBtn">취소</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

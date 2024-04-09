@@ -1,0 +1,157 @@
+@font-face {
+    font-family: 'Default-Font';
+    src: url(/font/TmoneyRoundWindRegular.otf);
+}
+@font-face {
+    font-family: 'Default-Bold-Font';
+    src: url(/font/TmoneyRoundWindExtraBold.otf);
+}
+
+:root {
+    --header-color : rgb(3, 6, 10);
+    --bg-color : rgb(13, 17, 23);
+    --btn-color : rgb(18, 22, 27);
+    --border-radius : 0.5rem;
+    --important-color : rgb(87, 227, 190);
+    --room-bg-color : rgb(22, 27, 34);
+    --room-join-bg-color : rgb(45, 53, 66);
+    --room-bg-hover-color : rgb(35, 43, 54);
+    --gray : rgb(168, 168, 168);
+    --light-gray : rgb(220, 220, 220);
+    
+    --inside-textarea-border-color : rgb(33, 35, 41);
+    --inside-textarea-color : rgb(43, 46, 54);
+    --modal-wrap-color : rgba(35, 38, 47);
+
+    --confirm-color : rgb(81, 147, 81);
+    --error-color : rgb(255, 83, 83);
+    --error-hover-color : rgb(226, 75, 75);
+
+    --mypage-btn-color : rgb(63, 68, 79);
+    --mypage-btn-hover-color : rgb(84, 90, 103);
+
+    --mypage-save-btn-color : rgb(70, 176, 91);
+    --mypage-save-btn-hover-color : rgb(65, 161, 84);
+}
+
+* {
+    font-family: 'Default-Font';
+    box-sizing: border-box;
+    margin: 0;
+    color: white;
+}
+b {
+    font-family: 'Default-Bold-Font';
+}
+
+
+body {
+    position: relative;
+    background-color: var(--bg-color);
+}
+
+button {
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+svg {
+    fill: rgb(168, 168, 168);
+    width: 20px;
+    height: 20px;
+}
+
+input {
+    padding: 0 1rem;
+    border: none;
+    outline: none;
+    background-color: rgb(26, 31, 40);
+}
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+ul {
+    padding: 0;
+    list-style: none;
+}
+label {
+    cursor: pointer;
+}
+pre {
+    white-space: pre-line;
+}
+
+.error-box {
+    text-align: center;
+    padding: 1rem 0 0 0;
+}
+.error {
+    color: var(--error-color);
+}
+.non-error {
+    color: var(--confirm-color);
+}
+
+/* 모달창 */
+.modal.disabled {
+    visibility: hidden;
+
+    .modal-wrap {
+        opacity: 0;
+        margin-top: 5rem;
+    }
+}
+.modal {
+    visibility: visible;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 4;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.611);
+
+    .modal-wrap {
+        opacity: 1;
+        margin-top: 0;
+        transition: all 0.3s ease-in-out;
+    }
+}
+.modal-wrap {
+    border-radius: 1rem;
+    padding: 2rem;
+    background-color: var(--modal-wrap-color);
+}
+.modal-title {
+    width: 100%;
+    height: 3rem;
+    text-align: right;
+}
+.modal-title svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+
+.modal-content {
+    width: 100%;
+}
+
+.msg {
+    margin-top: 0.3rem;
+    display: block;
+    font-size: 0.9rem;
+
+}
+.msg.disabled {
+    display: none;
+}

@@ -1,0 +1,44 @@
+header {
+    width: 100%;
+    height: 5rem;
+    background-color: var(--header-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 2rem;
+}
+
+.l-header {
+    width: 10rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.l-header img {
+    width: 100%;
+}
+
+.r-header {
+    display: flex;
+    gap: 2rem;
+    height: 100%;
+    align-items: center;
+}
+
+.r-header button {
+    color: rgb(168, 168, 168);
+    background-color: var(--header-color);
+    width: 5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+    transition: all 0.2s ease-in-out;
+}
+.r-header button:hover {
+    border-radius: var(--border-radius);
+    background-color: var(--btn-color);
+    color: rgb(217, 217, 217);
+}
+
+.r-header button:hover {
+    transition: all 0.2s ease-in-out;;
+}

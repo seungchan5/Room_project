@@ -1,0 +1,41 @@
+.modal-content {
+    text-align: center;
+    width: 100%;
+    
+}
+
+.logo {
+    margin-bottom: 1.5rem;
+}
+
+.logoImage {
+    width: 8rem;
+    height: 1.5rem;
+}
+
+.modal-input-box {
+    display: flex;
+    flex-direction: column;
+}
+
+#account{
+    margin-bottom: 1rem;
+    width: 15rem;
+    height: 2rem;
+}
+
+#password {
+    height: 2rem;
+}
+
+#login {
+    width: 4rem;
+    height: 2rem;
+    color: black;
+    background-color: gray;
+}
+
+.error-box{
+    padding-top: 0;
+    padding-bottom: 1rem;
+}

@@ -1,0 +1,56 @@
+.container {
+    width: 100%;
+    padding: 0 2rem;
+    position: relative;
+}
+
+.notify-info {
+    padding-top: 1rem;
+}
+
+hr{
+    margin-bottom: 1rem;
+}
+
+.notify-box, .process-box {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding-bottom: 1.5rem;
+    align-items: center;
+}
+
+input[type="text"] {
+    height: 2.5rem;
+    font-size: 0.9rem;
+}
+
+textarea {
+    padding: 0 1rem;
+    border: none;
+    outline: none;
+    background-color: rgb(26, 31, 40);
+    font-size: 0.9rem;
+}
+
+.button-box {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding-bottom: 1rem;
+}
+
+.completeBtn {
+    width: 5rem;
+    height: 2rem;
+    font-size: 1rem;
+    background-color:gray;
+    color: black;
+}
+
+.cancelBtn {
+    width: 5rem;
+    height: 2rem;
+    font-size: 1rem;
+    background-color: gray;
+    color: black;
+}

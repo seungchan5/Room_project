@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/notify_member.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/admin_notify_member.js"></script>
+    <title>회원 정보</title>
+</head>
+<body>
+    <div class="container">
+        <div class="input-box">
+            <div class="memberInfo-box">
+                <div class="memberInfo-input-box">
+                    <div class="memberInfo">
+                        <div class="title-memberId">회원 번호</div>
+                        <input type="text" name="memberId" id="memberId" value="1" th:value="${memberInfo.memberId}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberAccount">아이디</div>
+                        <input type="text" name="memberAccount" id="memberAccount" value="qwe" th:value="${memberInfo.memberAccount}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberName">이름</div>
+                        <input type="text" name="memberName" id="memberName" value="abc" th:value="${memberInfo.memberName}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberNickname">닉네임</div>
+                        <input type="text" name="memberNickname" id="memberNickname" value="abc" th:value="${memberInfo.memberNickname}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberPhone">휴대폰 번호</div>
+                        <input type="text" name="memberPhone" id="memberPhone" value="01035674431" th:value="${memberInfo.memberPhone}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberCreateDate">가입일</div>
+                        <input type="text" name="memberCreateDate" id="memberCreateDate" value="2024-02-27" th:value="${memberInfo.memberCreateDate}" readonly >
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberNotifyCount">누적 신고 수</div>
+                        <input type="text" name="memberNotifyCount" id="memberNotifyCount" value="0" th:value="${memberInfo.memberNotifyCount}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-socialType">소셜</div>
+                        <input type="text" name="socialType" id="socialType" value="" th:value="${memberInfo.socialType}" readonly>
+                    </div>
+                    <div class="memberInfo">
+                        <div class="title-memberStatus">현재 상태</div>
+                        <input type="text" name="memberStatus" id="memberStatus" value="정상" th:value="${memberInfo.memberStatusEnum}" readonly>
+                    </div>
+                </div>
+                <div class="memberInfo-image-box">
+                    <img src="/images/member_profile/basic-member-profile.jpg" th:src="|/images/member_profile/${memberInfo.memberProfile}|" alt="asdf">
+                </div>
+            </div>
+            <hr>
+            <div class="adminPorcess-input-box">
+                <div class="adminProcces">
+                    <div class="title-freezeReason">정지 사유</div>
+                    <input type="text" name="freezeReason" id="freezeReason" th:value="${memberInfo.notifyReason}" readonly>
+                </div>
+                <div class="adminProcces">
+                    <div class="title-freezePeriod">정지 기간</div>
+                    <select class="freezePeriod" id="freezePeriod">
+                        <option value="B1" selected>1일 정지</option>
+                        <option value="B3">3일 정지</option>
+                        <option value="B7">7일 정지</option>
+                        <option value="B30">30일 정지</option>
+                        <option value="B365">365일 정지</option>
+                        <option value="BPermanent">영구 정지</option>
+                    </select>
+                </div>
+            </div> 
+        </div>
+        <div class="button-box">
+            <div class="buttons">
+                <button class="freezeBtn">정지</button>
+            </div>
+            <div class="buttons">
+                <button class="cancelBtn">취소</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

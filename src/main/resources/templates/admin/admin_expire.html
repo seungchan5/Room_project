@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin_header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
+    <link rel="stylesheet" href="/css/admin_members.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/admin_header.js"></script>
+    <script src="/js/admin_expire.js"></script>
+    <title>탈퇴한 회원</title>
+</head>
+<body>
+<header th:replace="~{common/admin_header :: header}"></header>
+    <div class="container">
+        <aside>
+            <div class="admin-name-wrap">
+                <span class="admin-name" th:text="${adminName}">오승찬 </span><span class="admin-enum" th:text="${adminEnum}">신고 관리자</span>
+            </div>
+            <div class="menu-list-wrap">
+                <div class="category">
+                    <h4>일반</h4>
+                    <div class="menu-list">
+                        <a href="/admin/members" aria-selected="false">이용중인 회원</a>
+                        <a href="/admin/expire" aria-selected="true">탈퇴한 회원</a>
+                        <a href="/admin/rooms" aria-selected="false">방 관리</a>
+                    </div>
+                </div>
+                <div class="category">
+                    <h4>신고</h4>
+                    <div class="menu-list">
+                        <a href="/admin/notify" aria-selected="false">신고된 회원</a>
+                        <a href="/admin/bans" aria-selected="false">영구정지 회원</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="main-content">
+            <div class="search-box">
+                
+            </div>
+            <div class="table-form">
+                <div class="table-title">
+                    <h3>탈퇴한 회원 리스트</h3>
+                    <ul class="table-option-list">
+                        <li>
+                            <div class="search-wrap">
+                                <input type="text" name="word" th:value="${word}" id="word" placeholder="검색어를 입력하세요">
+                                <button type="submit" id="searchBtn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-content expire">
+                    <div class="table-top">
+                        <div class="email">이메일</div>
+                        <div class="name">이름</div>
+                        <div class="nickname">닉네임</div>
+                        <div class="phone">휴대폰</div>
+                        <div class="registerdate">가입일</div>
+                        <div class="expiredate">탈퇴일</div>
+                        <div class="social">소셜</div>
+                        <div class="status">상태</div>
+                    </div>
+                    <div class="table-list">
+                        <div class="entity" th:each="member : ${page.content}">
+                            <div class="email" th:text="${member.memberAccount}">starosc</div>
+                            <div class="name" th:text="${member.memberName}">오승찬하하</div>
+                            <div class="nickname" th:text="${member.memberNickname}">닉네임</div>
+                            <div class="phone" th:text="${member.memberPhone}">010-3567-4431</div>
+                            <div class="registerdate" th:text="${member.memberCreateDate}">2024-02-07</div>
+                            <div class="expiredate" th:text="${member.memberExpireDate}">2회</div>
+                            <div class="social" th:text="${member.socialType}">소셜</div>
+                            <div class="status" th:text="${member.memberStatusEnum}">상태</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-box">
+                    <div class="pagination" th:if="${!page.content.isEmpty()}">
+                        <div class="buttons">
+                            <button type="button" id="last-left" th:if="${page.number > 1}">
+                                <a th:href="@{'?page=' + 1}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/></svg>
+                                </a>
+                            </button>
+                            <button type="button" id="left" th:if="${page.number > 0}">
+                                <a th:href="@{'?page=' + ${page.number}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                                </a>
+                            </button>
+                        </div>
+                        <div id="page">
+                            <button type="button" class="page-num" th:each="i : ${#numbers.sequence(1, page.totalPages)}">
+                                <a th:href="@{'?page=' + ${i}}">[[${i}]]</a>
+                            </button>
+                        </div>
+                        <div class="buttons">
+                            <button type="button" id="right" th:if="${!page.last}">
+                                <a th:href="@{'?page=' + ${page.number+2}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </a>
+                            </button>
+                            <button type="button" id="last-right" th:if="${page.number+2 != page.totalPages and !page.last}">
+                                <a th:href="@{'?page=' + ${page.totalPages}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="errorMsg" th:if="${page.content.isEmpty()}">결과가 존재하지 않습니다.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

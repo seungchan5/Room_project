@@ -1,0 +1,75 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-wrap {
+    width: 35rem;
+    border-radius: 1rem;
+    background-color: rgb(33, 42, 56);
+    padding: 2rem;
+
+    margin-top: 0rem;
+    opacity: 1;
+    transition: all 0.6s ease-in-out;
+}
+.display {
+    margin-top: 4rem;
+    opacity: 0;
+    transition: all 0.6s ease-in-out;
+}
+
+.room-info {
+    text-align: center;
+}
+.room-image {
+    width: 100%;
+    height: 10rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.room-image img {
+    border-radius: 100%;
+    width: 9rem;
+    height: 9rem;
+}
+
+.room-title {
+    font-size: 1.5rem;
+}
+
+.room-intro {
+    font-size: 1.1rem;
+    color: rgb(222, 222, 222);
+    display: block;
+    margin-top: 0.5rem;
+}
+.center-wrap input, #enter-room {
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.5rem;
+}
+.center-wrap input {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+#enter-room {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    background-color: rgb(94, 110, 124);
+}
+#enter-room:hover {
+    background-color: rgb(83, 97, 110);
+}
+
+.errorMsg {
+    color: var(--error-color);
+    display: block;
+    text-align: center;
+}

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/common.css">
+    <link rel="stylesheet" href="/css/admin_header.css">
+    <link rel="stylesheet" href="/css/admin_menu.css">
+    <link rel="stylesheet" href="/css/admin_members.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="/js/admin_header.js"></script>
+    <script src="/js/admin_rooms.js"></script>
+    <title>방 리스트</title>
+</head>
+<body>
+    <header th:replace="~{common/admin_header :: header}"></header>
+    <div class="container">
+        <aside>
+            <div class="admin-name-wrap">
+                <span class="admin-name" th:text="${adminName}">오승찬 </span><span class="admin-enum" th:text="${adminEnum}">신고 관리자</span>
+            </div>
+            <div class="menu-list-wrap">
+                <div class="category">
+                    <h4>일반</h4>
+                    <div class="menu-list">
+                        <a href="/admin/members" aria-selected="false">이용중인 회원</a>
+                        <a href="/admin/expire" aria-selected="false">탈퇴한 회원</a>
+                        <a href="/admin/rooms" aria-selected="true">방 관리</a>
+                    </div>
+                </div>
+                <div class="category">
+                    <h4>신고</h4>
+                    <div class="menu-list">
+                        <a href="/admin/notify" aria-selected="false">신고된 회원</a>
+                        <a href="/admin/bans" aria-selected="false">영구정지 회원</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <div class="main-content">
+            <div class="search-box">
+            </div>
+            <div class="table-form">
+                <div class="table-title">
+                    <h3>방 리스트</h3>
+                    <ul class="table-option-list">
+                        <li>
+                            <div class="search-wrap">
+                                <input type="text" name="word" th:value="${word}" id="word" placeholder="검색어를 입력하세요">
+                                <button type="button" id="searchBtn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="table-content rooms">
+                    <div class="table-top">
+                        <div class="roomid">방 번호</div>
+                        <div class="roomname">방 이름</div>
+                        <div class="person">인원</div>
+                        <div class="manager">방장이름</div>
+                        <div class="createdate">방 생성일</div>
+                        <div class="public">공개방 여부</div>
+                        <div class="room-options">설정</div>
+                    </div>
+                    <div class="table-list">
+                        <div class="entity" th:each="room : ${page.content}">
+                            <div class="roomid" th:text="${room.roomId}">1</div>
+                            <div class="roomname" th:text="${room.roomTitle}">가나다라마바사아자차카타파하가</div>
+                            <div class="person" th:text="${room.roomMemberCount}">3/6</div>
+                            <div class="manager" th:text="${room.managerName}">가나다라마바사아자차</div>
+                            <div class="createdate" th:text="${room.roomCreateDate}">2024-02-07</div>
+                            <div class="public" th:text="${room.publicEnum}">X</div>
+                            <div class="option">
+                                <button type="button" class="option-more">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"/></svg>
+                                    <ul class="option-menu disabled" name="option-menu">
+                                        <li class="option-exit" name="option-exit" th:id="${room.roomId}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"/></svg>
+                                            <span>방 삭제</span>
+                                        </li>
+                                    </ul>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="page-box">
+                    <div class="pagination" th:if="${!page.content.isEmpty()}">
+                        <div class="buttons">
+                            <button type="button" id="last-left" th:if="${page.number > 1}">
+                                <a th:href="@{'?page=' + 1}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160zm352-160l-160 160c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L301.3 256 438.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0z"/></svg>
+                                </a>
+                            </button>
+                            <button type="button" id="left" th:if="${page.number > 0}">
+                                <a th:href="@{'?page=' + ${page.number}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+                                </a>
+                            </button>
+                        </div>
+                        <div id="page">
+                            <button type="button" class="page-num" th:each="i : ${#numbers.sequence(1, page.totalPages)}">
+                                <a th:href="@{'?page=' + ${i}}">[[${i}]]</a>
+                            </button>
+                        </div>
+                        <div class="buttons">
+                            <button type="button" id="right" th:if="${!page.last}">
+                                <a th:href="@{'?page=' + ${page.number+2}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg>
+                                </a>
+                            </button>
+                            <button type="button" id="last-right" th:if="${page.number+2 != page.totalPages and !page.last}">
+                                <a th:href="@{'?page=' + ${page.totalPages}}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
+                                </a>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="errorMsg" th:if="${page.content.isEmpty()}">결과가 존재하지 않습니다.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

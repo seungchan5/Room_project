@@ -1,0 +1,974 @@
+:root {
+    --side-color : rgb(36, 38, 44);
+}
+
+body {
+    height: 100vh;
+    max-height: 100vh;
+}
+.container {
+    display: grid;
+    grid-template-columns: 75% 25%;
+    height: calc(100% - 5rem);
+}
+.main-container {
+    display: grid;
+    grid-template-rows: 8% 92%;
+    overflow-y: hidden;
+}
+
+.left-title {
+    display: flex;
+    gap: 1.5rem;
+}
+.room-logo {
+    width: 8rem;
+    display: flex;
+    align-items: center;
+}
+.room-logo img {
+    width: 100%;
+}
+
+.room-title {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    gap: 1rem;
+    height: 4rem;
+}
+.room-title-wrap {
+    background-color: var(--room-bg-color);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+#setting {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgb(0, 0, 0, 0);
+}
+#setting svg {
+    width: 25px;
+    height: 25px;
+    pointer-events: none;
+}
+
+
+.container-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 9%);
+
+}
+.room-notice {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: calc(100% - 2rem);
+
+    background-color: rgb(245, 245, 245);
+    border-radius: 1rem;
+}
+.notice {
+    display: flex;
+    gap: 1rem;
+    padding: 0.5rem 1rem 1rem 1rem;
+    vertical-align: top;
+}
+.notice-text {
+    color: black;
+}
+.notice-time {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: gray;
+}
+.room-notice-content {
+    width: 100%;
+    color: black;
+    max-height: 3rem;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+.room-notice-content.display {
+    max-height: 50vh;
+    transition: max-height 0.5s ease-in-out;
+    overflow-y: scroll;
+}
+.room-notice svg {
+    fill: black
+}
+.speaker {
+    width: 25px;
+    height: 25px;
+}
+.folder {
+    margin-top: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+}
+.folder svg {
+    width: 90%;
+    height: 90%;
+    pointer-events: none;
+}
+
+
+.send-message {
+    background-color: var(--room-bg-hover-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.send-message textarea {
+    width: 100%;
+    font-size: 1rem;
+    max-height: 10rem;
+    border: none;
+    outline: none;
+    padding: 0.3rem 1rem;
+    background-color: rgba(0, 0, 0, 0);
+    vertical-align: middle;
+    height: auto;
+    resize: none;
+    overflow: hidden;
+}
+#send {
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--room-bg-hover-color);
+}
+#send svg {
+    pointer-events: none;
+}
+
+.chat-history {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 75vw;
+    overflow-y: scroll;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0rem;
+    height: 100%;
+}
+.you {
+    text-align: left;
+
+    display: flex;
+}
+.profile-box img {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 100%;
+}
+.name-box {
+    margin-left: 0.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 2.5rem;
+}
+/* .name-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    img {
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 100%;
+    }
+} */
+
+
+
+.me {
+    text-align: right;
+
+    .message-content {
+        text-align: left;
+    }
+}
+.message-box {
+    margin-bottom: 1rem;
+    vertical-align: bottom;
+}
+.message-content {
+    display: inline-block;
+    border-radius: 1rem;
+    padding: 0.3rem 0.5rem;
+    background-color: rgb(56, 54, 54);
+    width: auto;
+    max-width: 35vw;
+    word-wrap: break-word;
+}
+
+.time {
+    display: inline-block;
+    font-size: 0.8rem;
+}
+.date, .alram {
+    text-align: center;
+    margin: 1.5rem 0;
+}
+.date span, .alram span {
+    background-color: rgb(77, 74, 74);
+    font-size: 0.85rem;
+    border-radius: 2rem;
+    padding: 0.3rem 0.5rem;
+}
+
+/* 방 설정 */
+#setting {
+    position: relative;
+}
+.setting-menu-list {
+    z-index: 2;
+    position: absolute;
+    width: 10rem;
+    left: -10rem;
+    background-color: var(--room-bg-hover-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+.setting-menu {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    align-items: center;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding: 0.5rem 0.5rem;
+}
+.setting-menu svg {
+    text-align: center;
+}
+.setting-menu span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    pointer-events: none;
+    color: rgb(223, 223, 223);
+}
+.setting-menu-list.disabled {
+    display: none;
+}
+
+.setting-menu:hover {
+    background-color: rgb(59, 59, 74);
+    border-radius: 0.5rem;
+}
+
+/* 방 설정 변경 모달*/
+.modal-edit-room {
+    width: 30rem;
+    padding: 1rem 2rem;
+
+    .msg {
+        margin-top: 0.3rem;
+        display: block;
+    }
+
+    .modal-title {
+        height: 1.5rem;
+        svg {
+            z-index: 2;
+        }
+
+    }
+    .msg {
+        font-size: 0.9rem;
+    }
+    .msg.disabled {
+        display: none;
+    }
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .modal-content .create-room-image-box {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .modal-content button#img {
+        padding: 0;
+        width: 7rem;
+        height: 7rem;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .modal-content button#img img {
+        border-radius: 50%;
+    }
+    .modal-content #roomImage {
+        display: none;
+    }
+
+    /* 기본이미지 사용 체크박스 */
+    .create-room-image-box {
+        position: relative;;
+    }
+    .checkLabel {
+        height: 1rem;
+        position: absolute;
+        right: 1rem;
+        bottom: 0rem;
+        font-size: 0.9rem;
+    }
+    input[type="radio"]#defaultImage {
+        cursor: pointer;
+        width: initial;
+        height: initial;
+        visibility: visible;
+    }
+    
+    .modal-content button#img svg {
+        position: absolute;
+        width: 2.5rem;
+        height: 2.5rem;
+        bottom: 0;
+        right: 0%;
+        border: 0.05rem solid rgb(60, 60, 60);
+        border-radius: 100%;
+    }
+    .modal-content button#img * {
+        pointer-events: none;
+    }
+
+    .modal-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.5rem;
+    }
+
+    h4 {
+        white-space: nowrap;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-box > input {
+        width: 100%;
+        height: 2.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+    }
+
+    .input-wrap {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin: 0.5rem 0;
+        h4 {
+            margin-bottom: 0;
+        }
+    }
+    .password-box.disabled {
+        display: none;
+    }
+    
+
+    input[type="radio"] {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+    }
+    .radio-wrap {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        label {
+            width: 100%;
+            height: 2rem;
+            display: flex;
+            background-color: rgb(26, 31, 40);
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.1s ease-in-out;
+        }
+
+        label[aria-selected="true"]{
+            background-color: rgb(43, 50, 63);
+        }
+    }
+    .radio-wrap label:not([aria-selected="true"]):hover {
+        background-color: rgb(33, 38, 46);
+        transition: background-color 0.1s ease-in-out;
+    }
+
+    .radio-wrap label:first-child {
+        border-top-left-radius: 0.5rem;
+        border-bottom-left-radius: 0.5rem;
+    }
+    .radio-wrap label:last-child {
+        border-top-right-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+    }
+
+
+    .tag-wrap {
+        align-items: start;
+        gap: 1rem;
+    }
+    .tag-wrap h4 {
+        display: block;
+    }
+    .tag-add-box {
+        width: 7rem;
+        height: 2rem;
+        background-color: rgb(26, 31, 40);
+        padding: 0 0.5rem;
+        display: flex;
+        gap: 0.3rem;
+        align-items: center;
+        border-radius: 0.5rem;
+
+        span {
+            color: rgb(102, 108, 118);
+        }
+    }
+    input[name="tag-add"] {
+        width: 100%;
+        padding: 0;
+    }
+
+    .tag-list {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        flex-wrap: wrap;
+        column-gap: 1rem;
+        row-gap: 0.5rem;
+    }
+
+    .tag-box {
+        display: flex;
+        align-items: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        height: 2rem;
+        border-radius: 0.5rem;
+        background-color: rgb(26, 31, 40);
+        gap: 0.5rem;
+        padding: 0.3rem 0.5rem;
+        font-size: 0.85rem;
+    }
+    input[name="tag"] {
+        display: inline;
+        width: 100%;
+    }
+    .tagSvg {
+        width: 18px;
+        height: 18px;
+    }
+    .xSvg {
+        cursor: pointer;
+        width: 10px;
+        height: 10px;
+    }
+    .xSvg * {
+        pointer-events: none;
+    }
+
+    div.buttons {
+        display: flex;
+        justify-content: right;
+        gap: 1rem;
+        margin-bottom: 0;
+        margin-top: 2rem;
+
+        button {
+            width: 7rem;
+            height: 3rem;
+            border-radius: 1rem;
+            color: white;
+        }
+    }
+
+    #room-edit {
+        background-color: rgb(20, 20, 29);
+        font-size: 1rem;
+    }
+    #room-edit:hover {
+        background-color: rgb(9, 9, 12);
+    }
+
+    #room-cancel {
+        background-color: rgb(30, 30, 37);
+        font-size: 1rem;
+    }
+    #room-cancel:hover {
+        background-color: rgb(17, 17, 20);
+    }
+
+}
+
+.upload-notice {
+    width: 25rem;
+    padding: 1rem;
+
+    .modal-title {
+        height: 2rem;
+    }
+
+    h3 {
+        margin-bottom: 1rem;
+    }
+
+    #notice {
+        border: 0.1rem solid var(--inside-textarea-border-color);
+        border-radius: 1rem;
+        background-color: var(--inside-textarea-color);
+        padding: 1rem;
+        width: 100%;
+        min-height: 14rem;
+        font-size: 1rem;
+        outline: none;
+    }
+    .text-lengths {
+        text-align: right;
+        color: rgb(189, 189, 189);
+    }
+    .text-lengths span {
+        color: rgb(189, 189, 189);
+    }
+
+    .buttons {
+        width: 100%;
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        justify-content: right;
+    }
+    .buttons button {
+        width: 6rem;
+        height: 2.5rem;
+        border-radius: 0.5rem;
+    }
+    #room-notice {
+        background-color: rgb(20, 20, 29);
+        font-size: 1rem;
+    }
+    #room-notice:hover {
+        background-color: rgb(9, 9, 12);
+    }
+
+    #room-notice-delete {
+        background-color: var(--error-color);
+        font-size: 1rem;
+    }
+    #room-notice-delete:hover {
+        background-color: var(--error-hover-color);
+    }
+
+    #room-cancel {
+        background-color: rgb(30, 30, 37);
+        font-size: 1rem;
+    }
+    #room-cancel:hover {
+        background-color: rgb(17, 17, 20);
+    }
+
+    
+}
+
+/* 오른쪽 멤버 리스트 */
+aside {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: var(--side-color);
+    height: 100vh;
+}
+aside hr {
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 3rem;
+}
+.member-wraper {
+    width: 100%;
+}
+.member-wrap {
+    margin-bottom: 2rem;
+}
+
+.member-wrap > h4 {
+    display: inline;
+}
+
+.member-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.member {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.3rem 0.5rem;
+    border-radius: 1rem;
+    transition: background-color 0.2s ease-in-out;
+}
+.member:hover {
+    transition: all 0.2s ease-in-out;
+    background-color: rgb(23, 24, 28);
+
+    .member-more svg {
+        opacity: 1;
+    }
+}
+.meTag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
+.manager, .isMe {
+    border: 0.1rem solid rgb(201, 201, 201);
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    color: rgb(201, 201, 201);
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
+.member-data {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.member-data img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+.member-more {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: rgb(0, 0, 0, 0);
+    position: relative;
+}
+.member-more > svg {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+.member-more svg {
+    width: 100%;
+    height: 100%;
+}
+aside .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1rem;
+}
+aside .buttons button {
+    width: 100%;
+    height: 3rem;
+    border-radius: var(--border-radius);
+    background-color: rgb(49, 48, 50);
+    font-size: 1rem;
+    color: var(--gray);
+}
+aside .buttons button:hover {
+    background-color: rgb(31, 30, 32);
+    color: white;
+}
+
+.member-more > svg {
+    pointer-events: none;
+}
+
+.member-option-menu.disabled {
+    display: none;
+}
+
+.member-option-menu {
+    position: absolute;
+    border-radius: 0.5rem;
+    width: 10rem;
+    top: 3rem;
+    right: 1rem;
+    padding: 0.5rem 0.3rem;
+    background-color: var(--room-bg-hover-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.member-option-box {
+    width: 100%;
+    height: 2.3rem;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    align-items: center;
+    border-radius: var(--border-radius);
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+}
+.member-option-box:hover {
+    background-color: rgb(26, 32, 40);
+}
+.member-option-box * {
+    pointer-events: none;
+}
+
+.member-notify-box > span {
+    fill: rgb(240, 72, 72);
+    color: rgb(240, 72, 72);
+}
+
+.member-notify-box > svg {
+    fill: rgb(240, 72, 72);
+    color: rgb(240, 72, 72);
+    pointer-events: none;
+    opacity: unset;
+}
+
+/*신고하기 모달*/
+.modal-notify {
+    width: 30rem;
+    
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .notify {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .benotifiedmember-box {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        font-size: 1.1rem;
+        height: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .benotifiedmember-box > input {
+        font-size: 1rem;
+    }    
+
+    .notify-reason-box {
+        display: grid;
+        grid-template-columns: 30% 70%;
+        font-size: 1.1rem;
+        height: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .notify select {
+        background-color: var(--room-bg-color);
+        border: none;
+        text-align: center;
+    }
+
+    .notify-reason-box > input {
+        font-size: 1rem;
+    }
+
+    .notify-content-box {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+    }
+    .notify-content-box h4 {
+        display: inline;
+    }
+
+    .count-box {
+        margin-left: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .notify-content {
+        width: 100%;
+        margin-top: 0.8rem;
+    }
+
+    .notify-image-box {
+        font-size: 1.1rem;
+        display: grid;
+        grid-template-columns: 30% 70%;
+        align-items: center;
+    }
+
+    .notify-image-box > input {
+        height: 3rem;
+        line-height: 3rem;
+    }
+
+    .button-box {
+        display: flex;
+        margin-top: 2rem;
+        justify-content: center;
+        gap: 3rem;
+    }
+
+    .msg {
+        text-align: center;
+    }
+
+    .button-box > * {
+        width: 6rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        color: black;
+        background-color: gray;
+        border-radius: 0.5rem;
+    }
+
+    textarea {
+        padding: 0.5rem 1rem;
+        border: none;
+        outline: none;
+        background-color: rgb(26, 31, 40);
+        font-size: 1rem;
+        resize: none;
+    }
+}
+
+.chat-history::-webkit-scrollbar-track {
+    background-color: var(--bg-color); /* 스크롤바 트랙 배경색 */
+}
+
+.chat-history::-webkit-scrollbar-thumb {
+    background-color: var(--room-bg-hover-color);
+    border-radius: 1rem;
+}
+.chat-history::-webkit-scrollbar {
+    background-color: var(--room-bg-color);
+}
+
+.send-message {
+    position: relative;
+    z-index: 2;
+}
+.newMessageWrap {
+    width: 0;
+    height: 0;
+    left: 50%;
+    top: -3rem;
+    position: absolute;
+    
+}
+#newMessage {
+    position: absolute;
+    left: -5rem;
+    width: 10rem;
+    height: 2rem;
+    border-radius: 1rem;
+    background-color: gray;
+    font-size: 1rem;
+}
+.newMessageWrap.disabled {
+    display: none;
+}
+
+.require-phone-wrap {
+    position: absolute;
+    width: 14rem;
+    background-color: rgb(43, 46, 70);
+    border-radius: 1rem;
+    padding: 1rem;
+    right: 1rem;
+    bottom: 3.5rem;
+    animation: requirePhone 1.8s infinite;
+}
+.require-phone-wrap span {
+    display: block;
+    text-align: center;
+    font-size: 1.05rem;
+}
+.require-phone-wrap a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+    width: 100%;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background-color: rgb(82, 86, 128);
+    cursor: pointer;
+}
+.require-phone-wrap a * {
+    pointer-events: none;
+}
+.require-phone-wrap a:hover {
+    background-color: rgb(73, 77, 113);
+    text-decoration: none;
+}
+
+@keyframes requirePhone {
+    0% { bottom: 3.5rem }
+    50% { bottom: 3.7rem }
+    100% { bottom : 3.5rem}
+}
+
+
+
+.kick-room-confirm, .entrust-room-confirm {
+    width: 20rem;
+    transition: all 0.3 ease;
+
+    .confirm-message {
+        height: 3rem;
+        display: flex;
+        justify-content: center;
+        font-size: 1.1rem;
+    }
+    .buttons {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-top: 1rem;
+    }
+    .buttons button {
+        width: 45%;
+        height: 3rem;
+        border-radius: 0.5rem;
+    }
+
+    #room-kick, #room-entrust {
+        background-color: var(--error-color);
+        font-size: 1rem;
+    }
+    #room-kick:hover, #room-entrust:hover {
+        background-color: var(--error-hover-color);
+    }
+
+    #room-cancel {
+        background-color: rgb(30, 30, 37);
+        font-size: 1rem;
+    }
+    #room-cancel:hover {
+        background-color: rgb(17, 17, 20);
+    }
+}
